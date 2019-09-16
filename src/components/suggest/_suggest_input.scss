@@ -9,6 +9,13 @@
   .euiSuggestInput__statusIcon {
     padding-left: $euiSizeS;
     padding-right: $euiSizeS;
+    display: flex;
+    align-items: center;
+    background-color: inherit;
   }
 
+  .euiFormControlLayout div {
+    display: flex;
+    align-items: center;
+  }
 }
