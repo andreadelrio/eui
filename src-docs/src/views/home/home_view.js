@@ -43,7 +43,9 @@ export const HomeView = () => (
             </p>
           </EuiFlexItem>
           <EuiFlexItem grow={false}>
-            <EuiLink href="https://github.com/elastic/eui">
+            <EuiLink
+              aria-label="View on GitHub"
+              href="https://github.com/elastic/eui">
               <EuiIcon type="logoGithub" />
             </EuiLink>
           </EuiFlexItem>
