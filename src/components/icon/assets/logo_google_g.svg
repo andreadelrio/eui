@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+  <defs>
+    <path id="google-favicon-a" d="M170.902,36.57 C170.902,23.948 169.77,11.81 167.665,0.159 L0.011,0.159 L0.011,69.017 L95.814,69.017 C91.687,91.268 79.145,110.122 60.293,122.744 L60.293,167.409 L117.822,167.409 C151.483,136.418 170.902,90.783 170.902,36.57 L170.902,36.57 Z"/>
+    <path id="google-favicon-c" d="M160.011,144.536 C208.074,144.536 248.37,128.596 277.822,101.409 L220.293,56.744 C204.352,67.425 183.962,73.736 160.011,73.736 C113.647,73.736 74.403,42.422 60.406,0.346 L0.934,0.346 L0.934,46.468 C30.225,104.646 90.424,144.536 160.011,144.536 L160.011,144.536 Z"/>
+    <path id="google-favicon-e" d="M78.406,114.346 C74.845,103.666 72.822,92.257 72.822,80.524 C72.822,68.792 74.845,57.383 78.406,46.702 L78.406,0.582 L18.934,0.582 C6.878,24.613 0,51.8 0,80.524 C0,109.249 6.878,136.437 18.934,160.468 L78.406,114.346 L78.406,114.346 Z"/>
+    <path id="google-favicon-g" d="M160.011,71.313 C186.146,71.313 209.612,80.295 228.06,97.934 L279.117,46.877 C248.288,18.153 207.993,0.513 160.011,0.513 C90.424,0.513 30.225,40.404 0.934,98.582 L60.406,144.702 C74.403,102.627 113.647,71.313 160.011,71.313 L160.011,71.313 Z"/>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <g transform="translate(178 146)">
+      <mask id="google-favicon-b" fill="#fff">
+        <use xlink:href="#google-favicon-a"/>
+      </mask>
+      <polygon fill="#4285F4" points=".011 167.409 170.902 167.409 170.902 .159 .011 .159" mask="url(#google-favicon-b)"/>
+    </g>
+    <g transform="translate(18 212)">
+      <mask id="google-favicon-d" fill="#fff">
+        <use xlink:href="#google-favicon-c"/>
+      </mask>
+      <polygon fill="#34A853" points=".934 144.536 277.822 144.536 277.822 .346 .934 .346" mask="url(#google-favicon-d)"/>
+    </g>
+    <g transform="translate(0 98)">
+      <mask id="google-favicon-f" fill="#fff">
+        <use xlink:href="#google-favicon-e"/>
+      </mask>
+      <polygon fill="#FBBC04" points="0 160.468 78.406 160.468 78.406 .582 0 .582" mask="url(#google-favicon-f)"/>
+    </g>
+    <g transform="translate(18)">
+      <mask id="google-favicon-h" fill="#fff">
+        <use xlink:href="#google-favicon-g"/>
+      </mask>
+      <polygon fill="#EA4335" points=".934 144.702 279.117 144.702 279.117 .513 .934 .513" mask="url(#google-favicon-h)"/>
+    </g>
+  </g>
+</svg>
