@@ -427,15 +427,6 @@ export class EuiComboBox extends Component {
     }
 
     const { onChange, selectedOptions, singleSelection } = this.props;
-
-    if (singleSelection) {
-      if (selectedOptions.length) {
-        selectedOptions[0].checked = undefined;
-      }
-
-      addedOption.checked = 'on';
-    }
-
     onChange(
       singleSelection ? [addedOption] : selectedOptions.concat(addedOption)
     );
