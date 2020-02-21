@@ -147,8 +147,6 @@ export class EuiComboBoxOptionsList extends Component {
 
     let emptyStateContent;
 
-    console.log(singleSelection && selectedOptions);
-
     if (isLoading) {
       emptyStateContent = (
         <EuiFlexGroup gutterSize="s" justifyContent="center">
