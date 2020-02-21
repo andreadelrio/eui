@@ -16,6 +16,7 @@ export default class extends Component {
       },
       {
         label: 'Mimas',
+        // checked: 'on',
       },
       {
         label: 'Dione',
@@ -48,6 +49,7 @@ export default class extends Component {
 
   onChange = selectedOptions => {
     // We should only get back either 0 or 1 options.
+    // selectedOptions[0].checked = 'on';
     this.setState({
       selectedOptions: selectedOptions,
     });
