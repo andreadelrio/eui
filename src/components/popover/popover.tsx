@@ -167,9 +167,10 @@ export interface EuiPopoverProps {
   offset?: number;
   /**
    * Minimum distance between the popover and the bounding container;
+   * Pass an array of 4 values to adjust each side differently: `[top, right, bottom, left]`
    * Default is 16
    */
-  buffer?: number;
+  buffer?: number | [number, number, number, number];
   /**
    * Element to pass as the child element of the arrow;
    * Use case is typically limited to an accompanying `EuiBeacon`
@@ -362,9 +363,17 @@ export class EuiPopover extends Component<Props, State> {
     }
   };
 
+  onEscapeKey = (event: Event) => {
+    if (this.props.isOpen) {
+      event.preventDefault();
+      event.stopPropagation();
+      this.closePopover();
+    }
+  };
+
   onKeyDown = (event: KeyboardEvent) => {
     if (event.key === cascadingMenuKeys.ESCAPE) {
-      this.closePopover();
+      this.onEscapeKey((event as unknown) as Event);
     }
   };
 
@@ -724,7 +733,7 @@ export class EuiPopover extends Component<Props, State> {
             initialFocus={initialFocus}
             onDeactivation={onTrapDeactivation}
             onClickOutside={this.onClickOutside}
-            onEscapeKey={this.closePopover}
+            onEscapeKey={this.onEscapeKey}
             disabled={
               !ownFocus || !this.state.isOpenStable || this.state.isClosing
             }>
