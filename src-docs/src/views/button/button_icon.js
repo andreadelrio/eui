@@ -36,5 +36,21 @@ export default () => (
         disabled
       />
     </EuiFlexItem>
+    <EuiFlexItem grow={false}>
+      <EuiButtonIcon
+        onClick={() => window.alert('Button clicked')}
+        iconType="arrowRight"
+        display="fill"
+        aria-label="Next"
+      />
+    </EuiFlexItem>
+    <EuiFlexItem grow={false}>
+      <EuiButtonIcon
+        onClick={() => window.alert('Button clicked')}
+        iconType="arrowRight"
+        display="default"
+        aria-label="Next"
+      />
+    </EuiFlexItem>
   </EuiFlexGroup>
 );
