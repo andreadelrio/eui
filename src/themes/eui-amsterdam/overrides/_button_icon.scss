@@ -1,38 +1,16 @@
-// Change the hollow (bordered) buttons to have a transparent background
+// Change the hollow (bordered) buttons ("default" style) to have a transparent background
 // and no border
-@each $name, $color in $euiButtonIconTypes {
-  .euiButtonIcon--#{$name}.euiButtonIcon--fill {
-    @include euiButtonDefaultStyle($color);
+@each $name, $color in $euiButtonTypes {
+  .euiButtonIcon--#{$name} {
+    border: none;
 
-    @if ($name == 'ghost') {
-      // Ghost is unique and ALWAYS sits against a dark background.
-      $backgroundColorSimulated: mix($euiColorInk, $color, 70%);
-      color: makeHighContrastColor($color, $backgroundColorSimulated);
-    } @else {
-      &.euiButtonIcon--fill:focus {
-        outline-color: lightOrDarkTheme($euiColorInk, $euiColorGhost);
-      }
+    &.euiButtonIcon--default {
+      @include euiButtonDefaultStyle($color);
     }
 
-    &.euiButtonIcon--fill:not([class*='isDisabled']) {
+    &.euiButtonIcon--fill:not([disabled]) {
       color: chooseLightOrDarkText($color, $euiColorGhost, $euiColorInk);
-
-      &,
-      &:hover,
-      &:focus {
-        background-color: $color;
-      }
+      background-color: $color;
     }
-  }
-}
-
-// Fix ghost/disabled look specifically
-.euiButtonIcon.euiButtonIcon-isDisabled.euiButtonIcon--ghost,
-// adding fill type to override default theme
-.euiButtonIcon.euiButtonIcon-isDisabled.euiButtonIcon--ghost.euiButtonIcon--fill {
-  &,
-  &:focus {
-    color: $euiButtonColorGhostDisabled;
-    background-color: transparentize($euiButtonColorGhostDisabled, .9);
   }
 }

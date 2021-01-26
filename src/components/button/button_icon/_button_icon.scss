@@ -62,10 +62,10 @@
 
       // The function makes that hexes safe for theming
       $fillTextColor: chooseLightOrDarkText($color, $euiColorGhost, $euiColorInk);
-  
+
       color: $fillTextColor;
 
-      &:not([class*='isDisabled']) {
+      &:not([disabled]) {
         &:hover,
         &:focus,
         &:focus-within {
@@ -75,17 +75,24 @@
       }
     }
 
-    .euiButtonIcon--default {
-      &.euiButton--#{$name} {
+    &.euiButtonIcon--default {
+
+      &:not([disabled]) {
+        $shadowColor: $euiShadowColor;
         @if ($name == 'ghost') {
-          // Ghost is unique and ALWAYS sits against a dark background.
-          color: $color;
-        } @else if ($name == 'text') {
-          // The default color is lighter than the normal text color, make the it the text color
-          color: $euiTextColor;
-        } @else {
-          // Other colors need to check their contrast against the page background color.
-          color: makeHighContrastColor($color, $euiPageBackgroundColor);
+          $shadowColor: $euiColorInk;
+        } @else if (lightness($euiTextColor) < 50) {
+          // Only if this is the light theme do we use the button variant color to colorize the shadow
+          $shadowColor: desaturate($color, 60%);
+        }
+
+        @include euiSlightShadow($shadowColor);
+
+        &:hover,
+        &:focus,
+        &:focus-within {
+          @include euiSlightShadowHover($shadowColor);
+          background-color: transparentize($color, .9);
         }
       }
     }
