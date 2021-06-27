@@ -1,23 +1,21 @@
-$euiLinkColors: (
-  subdued: $euiTextSubduedColor,
-  primary: $euiColorPrimaryText,
-  secondary: $euiColorSecondaryText,
-  success: $euiColorSuccessText,
-  accent: $euiColorAccentText,
-  warning: $euiColorWarningText,
-  danger: $euiColorDangerText,
-  text: $euiTextColor,
-  ghost: $euiColorGhost,
-);
-
 .euiLink {
   @include euiLink;
+
+  &[target='_blank'] {
+    // Make the screen reader only text positioned relatively against the link itself
+    position: relative;
+
+    .euiScreenReaderOnly {
+      left: 0;
+    }
+  }
 
   .euiLink__externalIcon {
     margin-left: $euiSizeXS;
   }
 
   &.euiLink-disabled {
+    font-weight: inherit;
     text-decoration: none;
     cursor: default;
   }
@@ -28,14 +26,17 @@ $euiLinkColors: (
       color: $color;
 
       &:hover,
-      &:focus {
-        color: darken($color, 10%);
+      &:focus,
+      &:target {
         text-decoration: underline;
       }
 
+      &:target {
+        color: darken($color, 10%);
+      }
+
       &:focus {
-        @include euiFocusBackground($color);
-        @include euiFocusRing(null, 0);
+        @include euiFocusRing(null, 'outer');
       }
     }
   }

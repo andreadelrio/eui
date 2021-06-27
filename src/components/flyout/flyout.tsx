@@ -1,31 +1,21 @@
 /*
- * Licensed to Elasticsearch B.V. under one or more contributor
- * license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright
- * ownership. Elasticsearch B.V. licenses this file to you under
- * the Apache License, Version 2.0 (the "License"); you may
- * not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Copyright Elasticsearch B.V. and/or licensed to Elasticsearch B.V. under one
+ * or more contributor license agreements. Licensed under the Elastic License
+ * 2.0 and the Server Side Public License, v 1; you may not use this file except
+ * in compliance with, at your election, the Elastic License 2.0 or the Server
+ * Side Public License, v 1.
  */
 
 import React, {
   useEffect,
   useState,
   forwardRef,
-  CSSProperties,
-  Fragment,
-  ComponentType,
   ComponentPropsWithRef,
-  PropsWithChildren,
+  CSSProperties,
+  ElementType,
+  Fragment,
+  FunctionComponent,
+  MouseEvent,
   MutableRefObject,
 } from 'react';
 import classnames from 'classnames';
@@ -39,7 +29,7 @@ import {
   throttle,
 } from '../../services';
 
-import { CommonProps, keysOf } from '../common';
+import { CommonProps, keysOf, PropsOfElement } from '../common';
 import { EuiFocusTrap } from '../focus_trap';
 import { EuiOverlayMask, EuiOverlayMaskProps } from '../overlay_mask';
 import { EuiButtonIcon, EuiButtonIconPropsForButton } from '../button';
@@ -91,7 +81,7 @@ const paddingSizeToClassNameMap = {
 export const PADDING_SIZES = keysOf(paddingSizeToClassNameMap);
 type _EuiFlyoutPaddingSize = typeof PADDING_SIZES[number];
 
-type _EuiFlyoutProps = {
+interface _EuiFlyoutProps {
   onClose: () => void;
   /**
    * Defines the width of the panel.
@@ -161,35 +151,29 @@ type _EuiFlyoutProps = {
    * Named breakpoint or pixel value for customizing the minimum window width to enable the `push` type
    */
   pushMinBreakpoint?: EuiBreakpointSize | number;
-  style?: React.CSSProperties;
-};
+  style?: CSSProperties;
+}
 
-// Using ReactHTML rather than JSX.IntrinsicElements here because it does not include
-// SVG element types which cause errors because they do not have all the attributes needed.
-type ComponentTypes =
-  | 'div'
-  | 'span'
-  | 'nav'
-  | 'aside'
-  | 'section'
-  | 'article'
-  | 'header'
-  | ComponentType;
+const defaultElement = 'div';
 
-export type EuiFlyoutProps<T extends ComponentTypes = 'div'> = CommonProps &
-  ComponentPropsWithRef<T> & {
-    /**
-     * Sets the HTML element for `EuiFlyout`
-     */
-    as?: T;
-  } & _EuiFlyoutProps;
+type Props<T extends ElementType> = CommonProps & {
+  /**
+   * Sets the HTML element for `EuiFlyout`
+   */
+  as?: T;
+} & _EuiFlyoutProps &
+  Omit<PropsOfElement<T>, keyof _EuiFlyoutProps>;
 
-const EuiFlyout = forwardRef(
-  <T extends ComponentTypes>(
+export type EuiFlyoutProps<
+  T extends ElementType = typeof defaultElement
+> = Props<T> & Omit<ComponentPropsWithRef<T>, keyof Props<T>>;
+
+export const EuiFlyout = forwardRef(
+  <T extends ElementType = typeof defaultElement>(
     {
       className,
       children,
-      as: Element = 'div' as T,
+      as,
       hideCloseButton = false,
       closeButtonProps,
       closeButtonAriaLabel,
@@ -203,16 +187,17 @@ const EuiFlyout = forwardRef(
       style,
       maskProps,
       type = 'overlay',
-      outsideClickCloses = false,
+      outsideClickCloses,
       role = 'dialog',
       pushMinBreakpoint = 'l',
       ...rest
-    }: PropsWithChildren<EuiFlyoutProps<T>>,
+    }: EuiFlyoutProps<T>,
     ref:
       | ((instance: ComponentPropsWithRef<T> | null) => void)
       | MutableRefObject<ComponentPropsWithRef<T> | null>
       | null
   ) => {
+    const Element = as || defaultElement;
     /**
      * Setting the initial state of pushed based on the `type` prop
      * and if the current window size is large enough (larger than `pushMinBreakpoint`)
@@ -247,8 +232,8 @@ const EuiFlyout = forwardRef(
       null
     );
     const setRef = useCombinedRefs([setResizeRef, ref]);
-    // TODO: Allow this hooke to be conditional
-    const dimensions = useResizeObserver(resizeRef as Element);
+    // TODO: Allow this hook to be conditional
+    const dimensions = useResizeObserver(resizeRef);
 
     useEffect(() => {
       // This class doesn't actually do anything by EUI, but is nice to add for consumers (JIC)
@@ -345,7 +330,7 @@ const EuiFlyout = forwardRef(
               data-test-subj="euiFlyoutCloseButton"
               {...closeButtonProps}
               className={closeButtonClasses}
-              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+              onClick={(e: MouseEvent<HTMLButtonElement>) => {
                 onClose();
                 closeButtonProps?.onClick && closeButtonProps.onClick(e);
               }}
@@ -356,14 +341,14 @@ const EuiFlyout = forwardRef(
     }
 
     const flyoutContent = (
-      // @ts-expect-error JSX element without construct
       <Element
         {...(rest as ComponentPropsWithRef<T>)}
         role={role}
         className={classes}
         tabIndex={-1}
         style={newStyle || style}
-        ref={setRef}>
+        ref={setRef}
+      >
         {closeButton}
         {children}
       </Element>
@@ -379,22 +364,33 @@ const EuiFlyout = forwardRef(
      */
     let flyout = (
       <EuiFocusTrap disabled={isPushed} clickOutsideDisables={!ownFocus}>
-        {/* Outside click detector is needed if theres no overlay mask to auto-close when clicking on elements outside */}
-        <EuiOutsideClickDetector
-          isDisabled={isPushed || !outsideClickCloses}
-          onOutsideClick={() => onClose()}>
-          {flyoutContent}
-        </EuiOutsideClickDetector>
+        {flyoutContent}
       </EuiFocusTrap>
     );
-
+    /**
+     * Unless outsideClickCloses = true, then add the outside click detector
+     */
+    if (ownFocus === false && outsideClickCloses === true) {
+      flyout = (
+        <EuiFocusTrap disabled={isPushed} clickOutsideDisables={!ownFocus}>
+          {/* Outside click detector is needed if theres no overlay mask to auto-close when clicking on elements outside */}
+          <EuiOutsideClickDetector
+            isDisabled={isPushed}
+            onOutsideClick={() => onClose()}
+          >
+            {flyoutContent}
+          </EuiOutsideClickDetector>
+        </EuiFocusTrap>
+      );
+    }
     // If ownFocus is set, wrap with an overlay and allow the user to click it to close it.
     if (ownFocus && !isPushed) {
       flyout = (
         <EuiOverlayMask
-          onClick={onClose}
+          onClick={outsideClickCloses === false ? undefined : onClose}
           headerZindexLocation="below"
-          {...maskProps}>
+          {...maskProps}
+        >
           {flyout}
         </EuiOverlayMask>
       );
@@ -410,8 +406,11 @@ const EuiFlyout = forwardRef(
       </Fragment>
     );
   }
-);
-
-EuiFlyout.displayName = 'EuiFlyout';
-
-export { EuiFlyout };
+  // React.forwardRef interferes with the inferred element type
+  // Casting to ensure correct element prop type checking for `as`
+  // e.g., `href` is not on a `div`
+) as <T extends ElementType = typeof defaultElement>(
+  props: EuiFlyoutProps<T>
+) => JSX.Element;
+// Recast to allow `displayName`
+(EuiFlyout as FunctionComponent).displayName = 'EuiFlyout';
