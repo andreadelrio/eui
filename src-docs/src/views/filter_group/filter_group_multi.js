@@ -68,12 +68,16 @@ export default () => {
     setItems(newItems);
   }
 
+  console.log(items, 'items');
+  console.log(Array.isArray(items), 'check');
+
   const button = (
     <EuiFilterButton
       iconType="arrowDown"
       onClick={onButtonClick}
       isSelected={isPopoverOpen}
-      numFilters={items.length}
+      // numFilters={items.length}
+      items={items}
       hasActiveFilters={!!items.find((item) => item.checked === 'on')}
       numActiveFilters={items.filter((item) => item.checked === 'on').length}>
       Composers

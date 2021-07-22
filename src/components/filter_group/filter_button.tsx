@@ -14,6 +14,7 @@ import { EuiNotificationBadge } from '../badge/notification_badge';
 import { EuiButtonEmpty, EuiButtonEmptyProps } from '../button/button_empty';
 
 import { useInnerText } from '../inner_text';
+import { isTemplateSpan } from 'typescript';
 
 export type EuiFilterButtonProps = EuiButtonEmptyProps & {
   /**
@@ -47,12 +48,14 @@ export type EuiFilterButtonProps = EuiButtonEmptyProps & {
    * Remove border after button, good for opposite filters
    */
   noDivider?: boolean;
+  items: any;
 };
 
 export const EuiFilterButton: FunctionComponent<EuiFilterButtonProps> = ({
   children,
   className,
   iconType,
+  items,
   iconSide = 'right',
   color = 'text',
   hasActiveFilters,
@@ -97,6 +100,8 @@ export const EuiFilterButton: FunctionComponent<EuiFilterButtonProps> = ({
     dataText = children;
   }
 
+  const activeItems = items && items.filter((item) => item.checked === 'on');
+
   const [ref, innerText] = useInnerText();
   const buttonContents = (
     <Fragment>
@@ -105,7 +110,7 @@ export const EuiFilterButton: FunctionComponent<EuiFilterButtonProps> = ({
         className="euiFilterButton__textShift"
         data-text={dataText || innerText}
         title={dataText || innerText}>
-        {children}
+        {activeItems ? activeItems.map((item) => item.name) : children}
       </span>
 
       {(numFiltersDefined || numActiveFilters) && (
