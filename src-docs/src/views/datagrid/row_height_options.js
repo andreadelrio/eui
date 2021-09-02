@@ -8,7 +8,12 @@ import React, {
 } from 'react';
 import { fake } from 'faker';
 
-import { EuiDataGrid, EuiTitle, EuiSpacer } from '../../../../src/components/';
+import {
+  EuiDataGrid,
+  EuiTitle,
+  EuiSpacer,
+  EuiDescriptionList,
+} from '../../../../src/components/';
 
 const DataContext = createContext();
 
@@ -32,6 +37,22 @@ const columns = [
   },
 ];
 
+const favoriteVideoGames = [
+  {
+    title: 'The Elder Scrolls: Morrowind',
+    description: 'The opening music alone evokes such strong memories.',
+  },
+  {
+    title: 'TIE Fighter',
+    description:
+      'The sequel to XWING, join the dark side and fly for the Emporer.',
+  },
+  {
+    title: 'Quake 2',
+    description: 'The game that made me drop out of college.',
+  },
+];
+
 // it is expensive to compute 10000 rows of fake data
 // instead of loading up front, generate entries on the fly
 const raw_data = [];
@@ -47,7 +68,18 @@ function RenderCellValue({ rowIndex, columnId }) {
   if (data[rowIndex] == null) {
     data[rowIndex] = {
       name: fake('{{lorem.text}}'),
-      text: fake('{{lorem.text}}'),
+      name: (
+        <EuiDescriptionList
+          compressed
+          type="inline"
+          listItems={favoriteVideoGames}
+        />
+      ),
+      // name:
+      //   'Numquam amet culpa. Ea veritatis autem repellat tenetur voluptatibus. Nisi deleniti ea facilis natus vel cupiditate. Eum cumque sit officia. Impedit quos dolores quas.',
+      // text: fake('{{lorem.text}}'),
+      text:
+        'Recusandae quis deleniti rerum veniam vero vel atque eos quis. Nam expedita nemo sunt sint. Non in voluptas placeat aut saepe. Pariatur quia eos ad et nobis excepturi accusamus aut. Optio voluptatum et sint aspernatur labore quibusdam voluptatem.',
     };
   }
 
@@ -87,11 +119,15 @@ export default () => {
         lineCount: 2,
       },
       rowHeights: {
-        1: {
-          lineCount: 5,
-        },
-        4: 140,
-        5: 80,
+        // 1: {
+        //   lineCount: 5,
+        // },
+        1: 40,
+        2: 40,
+        3: 40,
+        4: 40,
+        5: 40,
+        6: 40,
       },
     }),
     []
@@ -115,6 +151,10 @@ export default () => {
       columnVisibility={{ visibleColumns, setVisibleColumns }}
       rowCount={10000}
       height={400}
+      gridStyle={{
+        fontSize: 's',
+        cellPadding: 's',
+      }}
       renderCellValue={RenderCellValue}
       rowHeightsOptions={rowHeightsOptions}
       pagination={{
