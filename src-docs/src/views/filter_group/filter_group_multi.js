@@ -72,7 +72,6 @@ export default () => {
     <EuiFilterButton
       iconType="arrowDown"
       onClick={onButtonClick}
-      isDisabled
       isSelected={isPopoverOpen}
       numFilters={items.length}
       hasActiveFilters={!!items.find((item) => item.checked === 'on')}

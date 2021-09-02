@@ -6,7 +6,6 @@ import {
   EuiFormLabel,
   EuiButtonEmpty,
   EuiText,
-  EuiSelect,
 } from '../../../../src/components';
 
 export default () => (
@@ -127,17 +126,11 @@ export default () => (
     <EuiSpacer size="m" />
 
     <EuiFormControlLayout
-      readOnly
-      prepend={<EuiFormLabel htmlFor="textField19">Label1</EuiFormLabel>}>
-      <EuiSelect
-        options={[
-          {
-            value: 'option_one',
-            text: 'Option one',
-          },
-        ]}
-        // value={value}
-        // onChange={onChange}
+      prepend={<EuiFormLabel htmlFor="textField19">Label</EuiFormLabel>}>
+      <input
+        type="text"
+        className="euiFieldText euiFieldText--inGroup"
+        id="textField19"
       />
     </EuiFormControlLayout>
 

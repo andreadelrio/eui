@@ -79,13 +79,12 @@ export default () => {
       <EuiFormRow display="columnCompressedSwitch" label="Switch">
         <EuiSwitch
           showLabel={false}
-          label="Switch1"
+          label="Switch"
           name="switch"
           checked={isSwitchChecked}
           onChange={onSwitchChange}
-          compressed>
-          hello
-        </EuiSwitch>
+          compressed
+        />
       </EuiFormRow>
     </EuiPanel>
   );
