@@ -155,6 +155,7 @@ export type EuiDataGridStyleHeader = 'shade' | 'underline';
 export type EuiDataGridStyleFooter = 'shade' | 'overline' | 'striped';
 export type EuiDataGridStyleRowHover = 'highlight' | 'none';
 export type EuiDataGridStyleCellPaddings = 's' | 'm' | 'l';
+export type EuiDataGridStyleLineHeights = 'regular' | 'extra';
 
 export interface EuiDataGridStyle {
   /**
@@ -189,6 +190,7 @@ export interface EuiDataGridStyle {
    * If set to true, the footer row will be sticky
    */
   stickyFooter?: boolean;
+  lineHeight?: EuiDataGridStyleLineHeights;
 }
 
 export interface EuiDataGridToolBarVisibilityColumnSelectorOptions {

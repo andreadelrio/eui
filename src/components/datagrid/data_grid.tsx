@@ -36,6 +36,7 @@ import {
   EuiDataGridStyleBorders,
   EuiDataGridStyleCellPaddings,
   EuiDataGridStyleFontSizes,
+  EuiDataGridStyleLineHeights,
   EuiDataGridStyleHeader,
   EuiDataGridStyleRowHover,
   EuiDataGridPopoverContents,
@@ -171,6 +172,13 @@ const fontSizesToClassMap: { [size in EuiDataGridStyleFontSizes]: string } = {
   s: 'euiDataGrid--fontSizeSmall',
   m: '',
   l: 'euiDataGrid--fontSizeLarge',
+};
+
+const lineHeightsToClassMap: {
+  [size in EuiDataGridStyleLineHeights]: string;
+} = {
+  regular: '',
+  extra: 'euiDataGrid--lineHeightExtra',
 };
 
 const headerToClassMap: { [header in EuiDataGridStyleHeader]: string } = {
@@ -895,6 +903,7 @@ export const EuiDataGrid: FunctionComponent<EuiDataGridProps> = (props) => {
   const classes = classNames(
     'euiDataGrid',
     fontSizesToClassMap[gridStyles.fontSize!],
+    lineHeightsToClassMap[gridStyles.lineHeight!],
     bordersToClassMap[gridStyles.border!],
     headerToClassMap[gridStyles.header!],
     footerToClassMap[gridStyles.footer!],

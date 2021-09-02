@@ -8,7 +8,12 @@ import React, {
 } from 'react';
 import { fake } from 'faker';
 
-import { EuiDataGrid, EuiTitle, EuiSpacer } from '../../../../src/components/';
+import {
+  EuiDataGrid,
+  EuiTitle,
+  EuiSpacer,
+  EuiDescriptionList,
+} from '../../../../src/components/';
 
 const DataContext = createContext();
 
@@ -32,6 +37,34 @@ const columns = [
   },
 ];
 
+const favoriteVideoGames = [
+  {
+    title: 'The Elder Scrolls: Morrowind',
+    description: 'The opening music alone evokes such strong memories.',
+  },
+  {
+    title: 'TIE Fighter',
+    description:
+      'The sequel to XWING, join the dark side and fly for the Emporer.',
+  },
+  {
+    title: 'Quake 1',
+    description: 'The game that made me drop out of college.',
+  },
+  {
+    title: 'Quake 2',
+    description: 'The game that made me drop out of college.',
+  },
+  {
+    title: 'Quake 3',
+    description: 'The game that made me drop out of college.',
+  },
+  {
+    title: 'Quake 4',
+    description: 'The game that made me drop out of college.',
+  },
+];
+
 // it is expensive to compute 10000 rows of fake data
 // instead of loading up front, generate entries on the fly
 const raw_data = [];
@@ -46,7 +79,14 @@ function RenderCellValue({ rowIndex, columnId }) {
 
   if (data[rowIndex] == null) {
     data[rowIndex] = {
-      name: fake('{{lorem.text}}'),
+      name: (
+        <EuiDescriptionList
+          type="inline"
+          compressed
+          listItems={favoriteVideoGames}
+        />
+      ),
+      // name: fake('{{lorem.text}}'),
       text: fake('{{lorem.text}}'),
     };
   }
@@ -84,14 +124,18 @@ export default () => {
   const rowHeightsOptions = useMemo(
     () => ({
       defaultHeight: {
-        lineCount: 2,
+        lineCount: 3,
       },
       rowHeights: {
         1: {
+          lineCount: 4,
+        },
+        2: {
           lineCount: 5,
         },
-        4: 140,
-        5: 80,
+        // 3: 50,
+        // 4: 80,
+        // 5: 100,
       },
     }),
     []
@@ -115,6 +159,12 @@ export default () => {
       columnVisibility={{ visibleColumns, setVisibleColumns }}
       rowCount={10000}
       height={400}
+      gridStyle={{
+        header: 'shade',
+        cellPadding: 's',
+        fontSize: 's',
+        lineHeight: 'extra',
+      }}
       renderCellValue={RenderCellValue}
       rowHeightsOptions={rowHeightsOptions}
       pagination={{
