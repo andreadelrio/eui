@@ -67,16 +67,16 @@ function RenderCellValue({ rowIndex, columnId }) {
 
   if (data[rowIndex] == null) {
     data[rowIndex] = {
-      name: fake('{{lorem.text}}'),
-      name: (
-        <EuiDescriptionList
-          compressed
-          type="inline"
-          listItems={favoriteVideoGames}
-        />
-      ),
-      // name:
-      //   'Numquam amet culpa. Ea veritatis autem repellat tenetur voluptatibus. Nisi deleniti ea facilis natus vel cupiditate. Eum cumque sit officia. Impedit quos dolores quas.',
+      // name: fake('{{lorem.text}}'),
+      // name: (
+      //   <EuiDescriptionList
+      //     compressed
+      //     type="inline"
+      //     listItems={favoriteVideoGames}
+      //   />
+      // ),
+      name:
+        'Numquam amet culpa. Ea veritatis autem repellat tenetur voluptatibus. Nisi deleniti ea facilis natus vel cupiditate. Eum cumque sit officia. Impedit quos dolores quas.',
       // text: fake('{{lorem.text}}'),
       text:
         'Recusandae quis deleniti rerum veniam vero vel atque eos quis. Nam expedita nemo sunt sint. Non in voluptas placeat aut saepe. Pariatur quia eos ad et nobis excepturi accusamus aut. Optio voluptatum et sint aspernatur labore quibusdam voluptatem.',
@@ -151,10 +151,9 @@ export default () => {
       columnVisibility={{ visibleColumns, setVisibleColumns }}
       rowCount={10000}
       height={400}
-      gridStyle={{
-        fontSize: 's',
-        cellPadding: 's',
-      }}
+      // gridStyle={{
+      //   fontSize: 'l',
+      // }}
       renderCellValue={RenderCellValue}
       rowHeightsOptions={rowHeightsOptions}
       pagination={{
