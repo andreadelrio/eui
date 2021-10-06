@@ -49,7 +49,6 @@ function createTheme(colors: any): EuiChartThemeType {
       minFontSize: 8,
       maxFontSize: 16,
       fillLabel: {
-        textInvertible: false,
         valueFont: {
           fontWeight: 700,
         },
@@ -100,9 +99,15 @@ function createTheme(colors: any): EuiChartThemeType {
       },
       barSeriesStyle: {
         displayValue: {
-          fontSize: 8,
+          fontSize: 10,
           fontFamily: fontFamily,
-          fill: colors.euiTextSubduedColor.rgba,
+          fill: {
+            textBorder: 0,
+          },
+          alignment: {
+            horizontal: 'center',
+            vertical: 'middle',
+          },
         },
       },
       scales: {
