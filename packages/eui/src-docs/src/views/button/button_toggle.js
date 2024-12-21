@@ -1,29 +1,30 @@
 import React, { useState } from 'react';
-
-import { EuiButton, EuiButtonIcon } from '../../../../src/components';
+import './StarButton.css';
+import { EuiButtonEmpty } from '../../../../src/components';
 
 export default () => {
-  const [toggle0On, setToggle0On] = useState(false);
-  const [toggle1On, setToggle1On] = useState(true);
+  const [toggle1On, setToggle1On] = useState(false);
 
   return (
-    <>
-      <EuiButton
-        onClick={() => {
-          setToggle0On((isOn) => !isOn);
-        }}
-      >
-        {toggle0On ? 'Hey there good lookin' : 'Toggle me'}
-      </EuiButton>
-      &emsp;
-      <EuiButtonIcon
-        title={toggle1On ? 'Play' : 'Pause'}
-        aria-label={toggle1On ? 'Play' : 'Pause'}
-        iconType={toggle1On ? 'play' : 'pause'}
-        onClick={() => {
-          setToggle1On((isOn) => !isOn);
-        }}
-      />
-    </>
+    <EuiButtonEmpty
+      // className={toggle1On ? 'exp active' : 'exp'}
+      size="s"
+      className={toggle1On ? 'star active' : 'star'}
+      iconType={toggle1On ? 'starFilled' : 'starEmpty'}
+      onClick={() => {
+        setToggle1On((isOn) => !isOn);
+      }}
+    >
+      <svg height="40" width="40" className="stardust">
+        <circle
+          cx="20"
+          cy="20"
+          r="8"
+          stroke="#0077CC"
+          stroke-width="5"
+          fill="transparent"
+        />
+      </svg>
+    </EuiButtonEmpty>
   );
 };
