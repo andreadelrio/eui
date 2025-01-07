@@ -110,6 +110,7 @@
 
 .star {
   position: relative;
+  gap: 0;
 }
 
 .star.active .stardust {

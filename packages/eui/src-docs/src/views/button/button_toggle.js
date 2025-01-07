@@ -7,7 +7,6 @@ export default () => {
 
   return (
     <EuiButtonEmpty
-      // className={toggle1On ? 'exp active' : 'exp'}
       size="s"
       className={toggle1On ? 'star active' : 'star'}
       iconType={toggle1On ? 'starFilled' : 'starEmpty'}
@@ -21,7 +20,7 @@ export default () => {
           cy="20"
           r="8"
           stroke="#0077CC"
-          stroke-width="5"
+          stroke-width="4"
           fill="transparent"
         />
       </svg>
